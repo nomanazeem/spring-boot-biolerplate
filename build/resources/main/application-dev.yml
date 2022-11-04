@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: Spring boot boiler plate code
+
+  datasource:
+    username: root
+    url: jdbc:mysql://localhost:3306/boilerplatecode
+    password: 12345678
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql:true:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  sleuth:
+    enabled: true
+
+  # Redis Config
+  cache:
+    type: redis
+    redis:
+      host: localhost
+      port: 6379
+
+# App Properties
+# 24 hours
+jwt:
+  secret: nomanAzeeemKey
+  expirationms: 86400000
+
+
+

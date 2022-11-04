@@ -1,0 +1,19 @@
+FROM gradle:7.4.2-jdk17 AS build-stage-0
+RUN mkdir /opt/freightbooking-api
+ADD ./ /opt/freightbooking-api
+WORKDIR /opt/freightbooking-api
+RUN gradle clean build
+
+
+FROM openjdk:17-alpine as build-stage-1
+WORKDIR /opt/freightbooking-api
+
+
+#alpine image doesn't come with curl. You need to add the installation instruction to your Dockerfile.
+#RUN apk --no-cache add curl
+
+COPY --from=build-stage-0 /opt/freightbooking-api/build/libs/*.jar /opt/freightbooking-api/freightbooking-api.jar
+ENTRYPOINT java -Dspring.profiles.active=${PROFILE} -jar /opt/freightbooking-api/freightbooking-api.jar
+
+#local running
+#java -javaagent:"opentelemetry-javaagent-all.jar" -Dotel.traces.exporter=zipkin -Dotel.metrics.exporter=none -Dotel.exporter.zipkin.endpoint=https://otel-collector.bcinfra.net/zipkin -Dotel.service.name=PRICE_API -jar build/libs/price-api.jar

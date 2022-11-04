@@ -1,2 +1,2 @@
-# spring-boot-biolerplate
-spring-boot-biolerplate
+# spring-boot-boilerplate
+spring-boot-boilerplate
